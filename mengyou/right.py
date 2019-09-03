@@ -22,7 +22,7 @@ def isLogin(environ):
     '''
     oldPayload = getTokenFromHeader(environ)
     if oldPayload == None:
-        return Flase
+        return False
     
     return True
 
@@ -34,12 +34,7 @@ def getTokenFromHeader(environ):
         return None
     
     http3RdSession = environ['HTTP_3RD_SESSION'].replace('\\n', '\n')
-    decode_res = decode(http3RdSession)
-
-    if decode_res['message'] == 'fail':
-        return None
-
-    return decode_res['data']['decode_str']
+    return decode(http3RdSession)
 
 def getDB():
     # 获取数据库连接配置
@@ -80,7 +75,7 @@ def authRight(environ):
         return False
     # 获取接口地址
     requestUri = environ['fc.request_uri']
-    fcInterfaceURL = requestUri.split('proxy')[1]
+    fcInterfaceURL = requestUri.split('proxy')[1].replace('.LATEST', '')
     if '?' in fcInterfaceURL:
         index = fcInterfaceURL.rfind('?')
         fcInterfaceURL = fcInterfaceURL[:index]
@@ -97,7 +92,7 @@ def authRight(environ):
     cursor.close()
     interfaces = [rurl['interface'] for rurl in roleUrls]
 
-    return True if fcInterfaceURL in interfaces else False
+    return fcInterfaceURL in interfaces
 
 def getBodyAsJson(environ):
     ''' 获取json格式的请求体

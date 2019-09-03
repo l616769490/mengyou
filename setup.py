@@ -13,7 +13,7 @@ from setuptools import setup, find_packages		# 没有这个库的可以通过pip
 
 setup(
     name = "mengyou",												    # pip项目名
-    version = "0.1.9",													# 版本号
+    version = "0.2.2",													# 版本号
     keywords = ("pip", "pathtool","timetool", "magetool", "mage"),							
     description = "萌游阿里云函数计算通用库",									# 描述
     long_description = "贵州旅游大数据项目所用到的阿里云函数计算通用库",
